@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026 KBO 매직넘버</title>
+  <style>
+    :root{--bg:#f3f5f7;--card:#fff;--ink:#16202c;--muted:#788391;--line:#e5e9ee;--blue:#1267e5;--red:#e5484d;--green:#119c66}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif}
+    header{background:#111c2d;color:#fff;padding:18px 0}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+    .head{display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:21px;font-weight:900;letter-spacing:-.5px}.brand b{color:#45a0ff}
+    .updated{font-size:12px;color:#9eacbf}.toolbar{display:flex;justify-content:space-between;align-items:end;margin:28px 0 14px;gap:12px}
+    h1{font-size:27px;margin:0 0 6px;letter-spacing:-1px}.sub{color:var(--muted);font-size:14px}.btn{border:1px solid #ccd3db;background:#fff;color:var(--ink);text-decoration:none;border-radius:9px;padding:9px 13px;font-size:13px;font-weight:700;cursor:pointer}
+    .grid{display:grid;grid-template-columns:minmax(620px,1.55fr) minmax(330px,.85fr);gap:16px}.left{display:grid;gap:16px;align-content:start}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 18px #12233a0a;overflow:hidden}
+    .card-title{display:flex;justify-content:space-between;align-items:center;padding:17px 20px;border-bottom:1px solid var(--line);font-weight:850}.badge{font-size:11px;background:#edf4ff;color:var(--blue);padding:5px 8px;border-radius:99px}
+    table{border-collapse:collapse;width:100%}th{font-size:11px;color:var(--muted);font-weight:700;padding:11px 8px;background:#fafbfc}td{padding:12px 8px;text-align:center;border-top:1px solid #f0f2f5;font-size:13px}tr:hover td{background:#fafcff}
+    td.team{text-align:left;font-weight:800;white-space:nowrap}.rank{font-size:14px;font-weight:900}.cut td{border-bottom:2px solid #77aef8}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:0}#standings tr{cursor:pointer}#standings tr.axis-horizontal td,#standings tr.axis-vertical td{background:color-mix(in srgb,var(--team-color) 10%,white)}#standings tr.axis-horizontal .team,#standings tr.axis-vertical .team{color:var(--team-color)}
+    .remaining{display:inline-block;min-width:24px;border-bottom:1px dotted #8b96a5;cursor:help;font-weight:800}
+    .side{display:grid;gap:16px;align-content:start}.number-box{padding:17px 20px}.number-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #eff1f4}.number-row:last-child{border:0}.number-label{font-size:13px;color:var(--muted);margin-top:3px}.num{font-size:27px;font-weight:950;letter-spacing:-1px}.num.need{font-size:14px;letter-spacing:-.3px}.num.blue{color:var(--blue)}.num.red{color:var(--red)}.num.green{color:var(--green)}
+    .formula{margin:0 20px 17px;padding:11px 12px;border-radius:9px;background:#f5f8fc;color:#627083;font-size:11px;line-height:1.55}.formula b{color:#344154}
+    .scenario-scroll{max-height:560px;overflow:auto}.scenario{table-layout:fixed}.scenario th,.scenario td{min-width:54px;width:54px;padding:6px 2px;font-size:10px;line-height:1.25}.scenario thead th{position:sticky;top:0;z-index:2}.scenario th:first-child{position:sticky;left:0;z-index:3;width:72px;min-width:72px;background:#f5f7fa}.scenario td:first-child{position:sticky;left:0;z-index:1;width:72px;min-width:72px;background:#fff;font-weight:800}.win-horizontal{color:var(--horizontal-color);background:color-mix(in srgb,var(--horizontal-color) 10%,white)!important;font-weight:800}.win-vertical{color:var(--vertical-color);background:color-mix(in srgb,var(--vertical-color) 10%,white)!important;font-weight:800}.win-tie{color:#9a6700;background:#fff8dd!important;font-weight:800}.impossible{color:#c9353b;background:#fff0f0!important;font-weight:800}.rate-col{border-left:2px solid var(--horizontal-color)!important}.rate-row{border-top:2px solid var(--vertical-color)!important}.rate-col.rate-row{box-shadow:inset 0 0 0 2px #fff}
+    .games{padding:6px 20px 14px}.game{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #eff1f4}.game:last-child{border:0}.time{font-size:12px;color:var(--muted)}.match{font-size:13px;font-weight:800}.place{font-size:11px;color:var(--muted)}
+    .notice{margin:16px 0 28px;color:var(--muted);font-size:12px;line-height:1.65}.notice strong{color:#56616e} footer{text-align:center;color:#9aa3ad;font-size:11px;padding:10px 0 26px}
+    @media(max-width:880px){.grid{grid-template-columns:1fr}.wrap{width:min(100% - 20px,700px)}.table-scroll{overflow-x:auto}table{min-width:650px}.toolbar{margin-top:20px}h1{font-size:23px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap head"><div class="brand"><b>KBO</b> MAGIC NUMBER</div><div class="updated" id="updated"></div></div></header>
+  <main class="wrap">
+    <div class="toolbar"><div><h1>2026 KBO 리그 순위</h1><div class="sub">9월 2일 경기 종료 기준 · 정규시즌 144경기</div></div><a class="btn" href="https://www.koreabaseball.com/Record/TeamRank/TeamRankDaily.aspx" target="_blank" rel="noreferrer">KBO 공식 순위 ↗</a></div>
+    <div class="grid">
+      <div class="left"><section class="card"><div class="card-title"><span>팀 순위</span><span class="badge">REGULAR SEASON</span></div><div class="table-scroll"><table>
+        <thead><tr><th>순위</th><th style="text-align:left">팀</th><th>경기</th><th>승</th><th>패</th><th>무</th><th>승률</th><th>게임차</th><th>연속</th><th>잔여</th></tr></thead><tbody id="standings"></tbody>
+      </table></div></section>
+      <section class="card"><div class="card-title"><span id="scenarioTitle">삼성–KT 경우의 수</span><span class="badge" id="scenarioAxis">삼성 · KT</span></div><div class="scenario-scroll"><table class="scenario" id="scenarioTable"></table></div><div class="formula">순위표에서 비교할 두 팀을 차례로 눌러주세요. 남은 경기에는 추가 무승부가 없다고 가정하며, 승률이 같으면 <b>타브</b>로 표시합니다.</div></section></div>
+      <aside class="side">
+        <section class="card"><div class="card-title"><span>우승 레이스</span><span class="badge" id="leaderBadge"></span></div><div class="number-box" id="titleNumbers"></div><div class="formula" id="titleFormula"></div></section>
+        <section class="card"><div class="card-title"><span>5강 진출 레이스</span><span class="badge">POSTSEASON</span></div><div class="number-box" id="postNumbers"></div></section>
+        <section class="card"><div class="card-title"><span>오늘의 경기</span><span class="badge" id="gameDate"></span></div><div class="games" id="games"></div></section>
+      </aside>
+    </div>
+    <p class="notice"><strong>데이터 기준</strong> — 순위와 잔여 맞대결 수는 KBO 공식 홈페이지의 2026년 9월 2일 경기 종료 기록입니다. 매직넘버는 상대 팀의 최대 가능 승수와 잔여 맞대결에서 강제로 발생하는 패배까지 반영한 자력 확정 기준입니다. 동률은 확정으로 보지 않으며, 취소 경기 재편성이나 리그의 동률 결정 규정에 따라 실제 확정 시점은 달라질 수 있습니다.</p>
+  </main><footer>Unofficial KBO dashboard · 순위 출처: KBO 공식 홈페이지</footer>
+  <script>
+    const SEASON_GAMES=144;
+    const DATA_DATE='2026. 9. 2. 경기 종료 기준';
+    // KBO 공식 홈페이지 2026-09-02 일자별 팀 순위
+    const teams=[
+      {name:'삼성',g:117,w:70,l:44,d:3,streak:'7승',color:'#074ca1'},{name:'KT',g:114,w:68,l:43,d:3,streak:'2승',color:'#111'},
+      {name:'LG',g:118,w:66,l:51,d:1,streak:'3승',color:'#c30452'},{name:'KIA',g:117,w:63,l:52,d:2,streak:'2패',color:'#ea0029'},{name:'두산',g:119,w:61,l:54,d:4,streak:'2패',color:'#131230'},
+      {name:'NC',g:113,w:53,l:58,d:2,streak:'5승',color:'#315288'},{name:'롯데',g:115,w:50,l:63,d:2,streak:'6패',color:'#041e42'},{name:'SSG',g:120,w:50,l:65,d:5,streak:'2승',color:'#ce0e2d'},
+      {name:'한화',g:116,w:49,l:64,d:3,streak:'8패',color:'#f37321'},{name:'키움',g:123,w:42,l:78,d:3,streak:'6패',color:'#570514'}
+    ];
+    // 화면에는 표시하지 않는 잔여 맞대결 DB. 각 팀은 상대와 시즌 16경기를 치릅니다.
+    // KBO 2026-09-02 팀간 승패표에서 이미 치른 경기 수를 16에서 뺀 값입니다.
+    const remainingMatchups={
+      '삼성':{KT:4,LG:5,KIA:2,'두산':4,NC:1,'롯데':4,SSG:2,'한화':4,'키움':1},
+      'KT':{LG:1,KIA:7,'두산':3,NC:2,'롯데':6,SSG:2,'한화':3,'키움':2},
+      'LG':{KIA:5,'두산':2,NC:3,'롯데':3,SSG:3,'한화':3,'키움':1},
+      'KIA':{'두산':1,NC:5,'롯데':2,SSG:3,'한화':1,'키움':1},
+      '두산':{NC:5,'롯데':2,SSG:4,'한화':1,'키움':3},
+      'NC':{'롯데':2,SSG:5,'한화':4,'키움':4},
+      '롯데':{SSG:1,'한화':6,'키움':3},
+      'SSG':{'한화':2,'키움':2},
+      '한화':{'키움':4}
+    };
+    const todayGames=[{time:'18:30',away:'한화',home:'KT',place:'수원'},{time:'18:30',away:'KIA',home:'NC',place:'창원'},{time:'18:30',away:'LG',home:'두산',place:'잠실'},{time:'18:30',away:'롯데',home:'삼성',place:'대구'},{time:'18:30',away:'SSG',home:'키움',place:'고척'}];
+    function sorted(){return [...teams].sort((a,b)=>(b.w/(b.w+b.l))-(a.w/(a.w+a.l))||b.w-a.w)}
+    function matchup(a,b){return remainingMatchups[a]?.[b]??remainingMatchups[b]?.[a]??0}
+    function remainingTooltip(teamName){
+      const opponents=sorted().filter(t=>t.name!==teamName);
+      return `${teamName} 잔여 경기\n`+opponents.map(t=>`${t.name}: ${matchup(teamName,t.name)}경기`).join('\n');
+    }
+    let horizontalTeamName='삼성',verticalTeamName='KT';
+    function updateSelectedRows(){
+      document.querySelectorAll('#standings tr').forEach(row=>{const selected=row.dataset.team===horizontalTeamName||row.dataset.team===verticalTeamName;row.classList.toggle('axis-horizontal',row.dataset.team===horizontalTeamName);row.classList.toggle('axis-vertical',row.dataset.team===verticalTeamName);if(selected)row.style.setProperty('--team-color',teams.find(t=>t.name===row.dataset.team).color);else row.style.removeProperty('--team-color')});
+    }
+    function selectScenarioTeam(teamName){
+      if(teamName===horizontalTeamName||teamName===verticalTeamName)return;
+      horizontalTeamName=verticalTeamName;verticalTeamName=teamName;updateSelectedRows();renderScenario();
+    }
+    function renderScenario(){
+      const horizontal=teams.find(t=>t.name===horizontalTeamName),vertical=teams.find(t=>t.name===verticalTeamName);
+      const horizontalRemain=SEASON_GAMES-horizontal.g,verticalRemain=SEASON_GAMES-vertical.g;
+      const horizontalCases=Array.from({length:horizontalRemain+1},(_,i)=>horizontalRemain-i);
+      const verticalCases=Array.from({length:verticalRemain+1},(_,i)=>verticalRemain-i);
+      const horizontalPaceWins=Math.round(horizontalRemain*horizontal.w/(horizontal.w+horizontal.l));
+      const verticalPaceWins=Math.round(verticalRemain*vertical.w/(vertical.w+vertical.l));
+      const headToHead=matchup(horizontal.name,vertical.name),horizontalOther=horizontalRemain-headToHead,verticalOther=verticalRemain-headToHead;
+      const possible=(hw,vw)=>Array.from({length:headToHead+1},(_,x)=>x).some(horizontalH2hWins=>horizontalH2hWins<=hw&&hw<=horizontalOther+horizontalH2hWins&&(headToHead-horizontalH2hWins)<=vw&&vw<=verticalOther+(headToHead-horizontalH2hWins));
+      document.querySelector('#scenarioTitle').textContent=`${horizontal.name}–${vertical.name} 경우의 수`;
+      document.querySelector('#scenarioAxis').textContent=`${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins} · ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}`;
+      document.querySelector('#scenarioTable').style.setProperty('--horizontal-color',horizontal.color);
+      document.querySelector('#scenarioTable').style.setProperty('--vertical-color',vertical.color);
+      document.querySelector('#scenarioTable').style.minWidth=`${72+(horizontalRemain+1)*54}px`;
+      document.querySelector('#scenarioTable').innerHTML=`<thead><tr><th>${vertical.name}＼${horizontal.name}</th>${horizontalCases.map(w=>`<th class="${w===horizontalPaceWins?'rate-col':''}" title="${w}승 ${horizontalRemain-w}패">${w}/${horizontalRemain-w}</th>`).join('')}</tr></thead><tbody>${verticalCases.map(vw=>`<tr><td class="${vw===verticalPaceWins?'rate-row':''}" title="${vw}승 ${verticalRemain-vw}패">${vw}/${verticalRemain-vw}</td>${horizontalCases.map(hw=>{const rateClass=`${hw===horizontalPaceWins?'rate-col ':''}${vw===verticalPaceWins?'rate-row':''}`,anchor=hw===horizontalPaceWins&&vw===verticalPaceWins?' id="paceIntersection"':'';if(!possible(hw,vw))return `<td${anchor} class="impossible ${rateClass}">불가</td>`;const hf=horizontal.w+hw,vf=vertical.w+vw,winner=hf>vf?horizontal.name:hf<vf?vertical.name:'타브',cls=winner===horizontal.name?'win-horizontal':winner===vertical.name?'win-vertical':'win-tie';return `<td${anchor} class="${cls} ${rateClass}">${winner}<br>${hf}-${vf}</td>`}).join('')}</tr>`).join('')}</tbody>`;
+      requestAnimationFrame(()=>{const scroller=document.querySelector('.scenario-scroll'),target=document.querySelector('#paceIntersection');if(target){scroller.scrollLeft=Math.max(0,target.offsetLeft-scroller.clientWidth/2);scroller.scrollTop=Math.max(0,target.offsetTop-scroller.clientHeight/2)}});
+    }
+    function render(){
+      const s=sorted(), lead=s[0];
+      document.querySelector('#standings').innerHTML=s.map((t,i)=>{const pct=t.w/(t.w+t.l),gb=i?((lead.w-t.w)+(t.l-lead.l))/2:0;return `<tr class="${i===4?'cut':''}" data-team="${t.name}" tabindex="0"><td class="rank">${i+1}</td><td class="team"><i class="dot" style="background:${t.color}"></i>${t.name}</td><td>${t.g}</td><td>${t.w}</td><td>${t.l}</td><td>${t.d}</td><td>${pct.toFixed(3).slice(1)}</td><td>${i?gb.toFixed(1):'-'}</td><td>${t.streak}</td><td><span class="remaining" title="${remainingTooltip(t.name)}" aria-label="${remainingTooltip(t.name)}">${SEASON_GAMES-t.g}</span></td></tr>`}).join('');
+      document.querySelectorAll('#standings tr').forEach(row=>{row.addEventListener('click',()=>selectScenarioTeam(row.dataset.team));row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectScenarioTeam(row.dataset.team)}})});updateSelectedRows();
+      const selfMagic=t=>{
+        const remain=SEASON_GAMES-t.g;
+        for(let wins=0;wins<=remain;wins++){
+          const guaranteed=s.every(o=>{if(o===t)return true;const forcedLosses=Math.max(0,wins-(remain-matchup(t.name,o.name)));const opponentMax=o.w+(SEASON_GAMES-o.g)-forcedLosses;return t.w+wins>opponentMax});
+          if(guaranteed)return wins;
+        }
+        return null;
+      };
+      const contenders=s.slice(0,4).map(t=>({team:t,magic:selfMagic(t)}));
+      document.querySelector('#leaderBadge').textContent='잔여 맞대결 반영';
+      const selfContenders=contenders.filter(({magic})=>magic!==null);
+      document.querySelector('#titleNumbers').innerHTML=selfContenders.length
+        ? selfContenders.map(({team:t,magic})=>`<div class="number-row"><div><b>${t.name} 자력 우승</b><div class="number-label">잔여 ${SEASON_GAMES-t.g}경기</div></div><div class="num blue">M${magic}</div></div>`).join('')
+        : `<div class="number-row"><div><b>자력 우승 가능 팀 없음</b><div class="number-label">경쟁 팀의 경기 결과가 필요합니다</div></div><div class="num">—</div></div>`;
+      document.querySelector('#titleFormula').innerHTML=`<b>맞대결 제약을 포함한 자력 매직넘버</b><br>KT가 28승하면 삼성전 4경기 중 최소 2승이 포함됩니다. 따라서 KT는 96승, 삼성은 최대 95승이 되어 KT의 자력 매직넘버는 M28입니다. 삼성도 같은 방식으로 계산합니다.`;
+      const bottomFive=s.slice(5);
+      const postMagic=t=>{
+        const remain=SEASON_GAMES-t.g;
+        for(let wins=0;wins<=remain;wins++){
+          const clinched=bottomFive.every(o=>{const forcedLosses=Math.max(0,wins-(remain-matchup(t.name,o.name)));const opponentMax=o.w+(SEASON_GAMES-o.g)-forcedLosses;return t.w+wins>opponentMax});
+          if(clinched)return wins;
+        }
+        return null;
+      };
+      document.querySelector('#postNumbers').innerHTML=s.slice(0,5).map(t=>{const magic=postMagic(t);return `<div class="number-row"><div><b>${t.name}</b><div class="number-label">6~10위 최대 승수 기준</div></div><div class="num ${magic===null?'need red':'green'}">${magic===null?'타팀 결과 필요':`M${magic}`}</div></div>`}).join('');
+      document.querySelector('#games').innerHTML=todayGames.map(g=>`<div class="game"><span class="time">${g.time}</span><span class="match">${g.away} <span style="color:#a1a9b3">vs</span> ${g.home}</span><span class="place">${g.place}</span></div>`).join('');
+      renderScenario();
+      document.querySelector('#updated').textContent=DATA_DATE;document.querySelector('#gameDate').textContent='9.03';
+    }
+    render();
+  </script>
+</body>
+</html>
