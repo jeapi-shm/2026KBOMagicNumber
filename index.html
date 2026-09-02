@@ -44,6 +44,7 @@
   </main><footer>Unofficial KBO dashboard · 순위 출처: KBO 공식 홈페이지</footer>
   <script>
     const SEASON_GAMES=144;
+    // AUTO_DATA_START — scripts/update_kbo.py가 이 구간을 갱신합니다.
     const DATA_DATE='2026. 9. 2. 경기 종료 기준';
     // KBO 공식 홈페이지 2026-09-02 일자별 팀 순위
     const teams=[
@@ -65,6 +66,7 @@
       'SSG':{'한화':2,'키움':2},
       '한화':{'키움':4}
     };
+    // AUTO_DATA_END
     const todayGames=[{time:'18:30',away:'한화',home:'KT',place:'수원'},{time:'18:30',away:'KIA',home:'NC',place:'창원'},{time:'18:30',away:'LG',home:'두산',place:'잠실'},{time:'18:30',away:'롯데',home:'삼성',place:'대구'},{time:'18:30',away:'SSG',home:'키움',place:'고척'}];
     function sorted(){return [...teams].sort((a,b)=>(b.w/(b.w+b.l))-(a.w/(a.w+a.l))||b.w-a.w)}
     function matchup(a,b){return remainingMatchups[a]?.[b]??remainingMatchups[b]?.[a]??0}
