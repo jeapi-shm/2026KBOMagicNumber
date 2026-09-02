@@ -95,7 +95,7 @@
         let needed=null;
         for(let wins=0;wins<=chaserRemain;wins++){const feasible=fixedAxis==='horizontal'?possible(fixedWins,wins):possible(wins,fixedWins);if(feasible&&finalPct(chaser,wins)>finalPct(fixed,fixedWins)){needed=wins;break}}
         const fixedLosses=fixedRemain-fixedWins;
-        document.querySelector('#scenarioAnswer').innerHTML=needed===null?`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}의 역전은 불가능합니다.`:`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}이 역전하려면 최소 <b>${needed}승 ${chaserRemain-needed}패</b>가 필요합니다.`;
+        document.querySelector('#scenarioAnswer').innerHTML=needed===null?`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}의 승리는 불가능합니다.`:`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}이 승리하려면 최소 <b>${needed}승 ${chaserRemain-needed}패</b>가 필요합니다.`;
       };
       document.querySelector('#scenarioTitle').textContent=`${horizontal.name}–${vertical.name} 경우의 수`;
       document.querySelector('#scenarioAxis').textContent=`현재 승률 기반 기대 승률 : ${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins} · ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}`;
