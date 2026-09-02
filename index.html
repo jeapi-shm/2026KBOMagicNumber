@@ -84,7 +84,9 @@
         document.querySelector('#scenarioAnswer').innerHTML=needed===null?`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}은 우위에 설 수 없습니다.`:`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}이 우위에 서려면 최소 <b>${needed}승 ${chaserRemain-needed}패</b>가 필요합니다.`;
       };
       document.querySelector('#scenarioTitle').textContent=`${horizontal.name}–${vertical.name} 경우의 수`;
-      document.querySelector('#scenarioAxis').textContent=`현재 승률 기반 기대 승률 : ${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins} · ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}`;
+      const horizontalPacePct=horizontalRemain?(horizontalPaceWins/horizontalRemain).toFixed(3):'0.000';
+      const verticalPacePct=verticalRemain?(verticalPaceWins/verticalRemain).toFixed(3):'0.000';
+      document.querySelector('#scenarioAxis').textContent=`현재 승률 기반 기대 승률 : ${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins}(${horizontalPacePct}), ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}(${verticalPacePct})`;
       document.querySelector('#scenarioAnswer').textContent='축의 승/패 기록을 누르면 상대 팀의 역전 조건을 계산합니다.';
       document.querySelector('#scenarioTable').style.setProperty('--horizontal-color',horizontal.color);
       document.querySelector('#scenarioTable').style.setProperty('--vertical-color',vertical.color);
