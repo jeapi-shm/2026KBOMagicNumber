@@ -33,7 +33,7 @@
       <div class="left"><section class="card"><div class="card-title"><span>팀 순위</span><span class="badge">정규시즌</span></div><div class="table-scroll"><table class="standings-table">
         <thead><tr><th>순위</th><th style="text-align:left">팀</th><th>경기</th><th>승</th><th>패</th><th>무</th><th>승률</th><th>게임차</th><th>연속</th><th>잔여</th></tr></thead><tbody id="standings"></tbody>
       </table></div></section>
-      <section class="card"><div class="card-title"><span id="scenarioTitle">삼성–KT 경우의 수</span><span class="badge" id="scenarioAxis">삼성 · KT</span></div><div class="scenario-answer" id="scenarioAnswer">축의 승/패 기록을 누르면 상대 팀의 역전 조건을 계산합니다.</div><div class="scenario-scroll"><table class="scenario" id="scenarioTable"></table></div><div class="formula">순위표에서 비교할 두 팀을 차례로 눌러주세요. 남은 경기에는 추가 무승부가 없다고 가정하며, 승률이 같으면 <b>타브</b>로 표시합니다.</div></section></div>
+      <section class="card"><div class="card-title"><span id="scenarioTitle">삼성–KT 경우의 수</span><span class="badge" id="scenarioAxis">삼성 · KT</span></div><div class="scenario-answer" id="scenarioAnswer">축의 승/패 기록을 누르면 상대 팀의 우위 조건을 계산합니다.</div><div class="scenario-scroll"><table class="scenario" id="scenarioTable"></table></div><div class="formula">순위표에서 비교할 두 팀을 차례로 눌러주세요. 남은 경기에는 추가 무승부가 없다고 가정하며, 승률이 같으면 <b>타브</b>로 표시합니다.</div></section></div>
       <aside class="side">
         <section class="card"><div class="card-title"><span>KS 직행 매직넘버</span></div><div class="number-box" id="titleNumbers"></div><div class="formula" id="titleFormula"></div></section>
         <section class="card"><div class="card-title"><span>가을야구 진출 확정 매직 넘버</span></div><div class="number-box" id="postNumbers"></div></section>
@@ -89,7 +89,7 @@
       const paceChange=(team,pacePct)=>Number(pacePct)-team.w/(team.w+team.l);
       const changeMarkup=change=>`<span class="${change>0?'pace-up':change<0?'pace-down':'pace-flat'}">${change>=0?'+':''}${change.toFixed(3)}</span>`;
       document.querySelector('#scenarioAxis').innerHTML=`현재 승률 기반 기대 결과 : ${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins}(${horizontalPacePct}, ${changeMarkup(paceChange(horizontal,horizontalPacePct))}), ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}(${verticalPacePct}, ${changeMarkup(paceChange(vertical,verticalPacePct))})`;
-      document.querySelector('#scenarioAnswer').textContent='축의 승/패 기록을 누르면 상대 팀의 역전 조건을 계산합니다.';
+      document.querySelector('#scenarioAnswer').textContent='축의 승/패 기록을 누르면 상대 팀의 우위 조건을 계산합니다.';
       document.querySelector('#scenarioTable').style.setProperty('--horizontal-color',horizontal.color);
       document.querySelector('#scenarioTable').style.setProperty('--vertical-color',vertical.color);
       document.querySelector('#scenarioTable').style.minWidth=`${72+(horizontalRemain+1)*54}px`;
