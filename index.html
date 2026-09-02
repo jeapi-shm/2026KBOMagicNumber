@@ -88,7 +88,7 @@
       const verticalPacePct=verticalRemain?(verticalPaceWins/verticalRemain).toFixed(3):'0.000';
       const paceChange=(team,pacePct)=>Number(pacePct)-team.w/(team.w+team.l);
       const changeMarkup=change=>`<span class="${change>0?'pace-up':change<0?'pace-down':'pace-flat'}">${change>=0?'+':''}${change.toFixed(3)}</span>`;
-      document.querySelector('#scenarioAxis').innerHTML=`현재 승률 기반 기대 승률 : ${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins}(${horizontalPacePct}, ${changeMarkup(paceChange(horizontal,horizontalPacePct))}), ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}(${verticalPacePct}, ${changeMarkup(paceChange(vertical,verticalPacePct))})`;
+      document.querySelector('#scenarioAxis').innerHTML=`현재 승률 기반 기대 결과 : ${horizontal.name} ${horizontalPaceWins}/${horizontalRemain-horizontalPaceWins}(${horizontalPacePct}, ${changeMarkup(paceChange(horizontal,horizontalPacePct))}), ${vertical.name} ${verticalPaceWins}/${verticalRemain-verticalPaceWins}(${verticalPacePct}, ${changeMarkup(paceChange(vertical,verticalPacePct))})`;
       document.querySelector('#scenarioAnswer').textContent='축의 승/패 기록을 누르면 상대 팀의 역전 조건을 계산합니다.';
       document.querySelector('#scenarioTable').style.setProperty('--horizontal-color',horizontal.color);
       document.querySelector('#scenarioTable').style.setProperty('--vertical-color',vertical.color);
