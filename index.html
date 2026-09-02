@@ -30,13 +30,13 @@
   <main class="wrap">
     <div class="toolbar"><div><h1>2026 KBO 리그 순위</h1><div class="sub">9월 2일 경기 종료 기준 · 정규시즌 144경기</div></div><a class="btn" href="https://www.koreabaseball.com/Record/TeamRank/TeamRankDaily.aspx" target="_blank" rel="noreferrer">KBO 공식 순위 ↗</a></div>
     <div class="grid">
-      <div class="left"><section class="card"><div class="card-title"><span>팀 순위</span><span class="badge">REGULAR SEASON</span></div><div class="table-scroll"><table class="standings-table">
+      <div class="left"><section class="card"><div class="card-title"><span>팀 순위</span><span class="badge">정규시즌</span></div><div class="table-scroll"><table class="standings-table">
         <thead><tr><th>순위</th><th style="text-align:left">팀</th><th>경기</th><th>승</th><th>패</th><th>무</th><th>승률</th><th>게임차</th><th>연속</th><th>잔여</th></tr></thead><tbody id="standings"></tbody>
       </table></div></section>
       <section class="card"><div class="card-title"><span id="scenarioTitle">삼성–KT 경우의 수</span><span class="badge" id="scenarioAxis">삼성 · KT</span></div><div class="scenario-answer" id="scenarioAnswer">축의 승/패 기록을 누르면 상대 팀의 역전 조건을 계산합니다.</div><div class="scenario-scroll"><table class="scenario" id="scenarioTable"></table></div><div class="formula">순위표에서 비교할 두 팀을 차례로 눌러주세요. 남은 경기에는 추가 무승부가 없다고 가정하며, 승률이 같으면 <b>타브</b>로 표시합니다.</div></section></div>
       <aside class="side">
-        <section class="card"><div class="card-title"><span>KS 직행 매직넘버</span><span class="badge" id="leaderBadge"></span></div><div class="number-box" id="titleNumbers"></div><div class="formula" id="titleFormula"></div></section>
-        <section class="card"><div class="card-title"><span>가을야구 진출 확정 매직 넘버</span><span class="badge">POSTSEASON</span></div><div class="number-box" id="postNumbers"></div></section>
+        <section class="card"><div class="card-title"><span>KS 직행 매직넘버</span></div><div class="number-box" id="titleNumbers"></div><div class="formula" id="titleFormula"></div></section>
+        <section class="card"><div class="card-title"><span>가을야구 진출 확정 매직 넘버</span></div><div class="number-box" id="postNumbers"></div></section>
         <section class="card"><div class="card-title"><span>오늘의 경기</span><span class="badge" id="gameDate"></span></div><div class="games" id="games"></div></section>
       </aside>
     </div>
@@ -106,7 +106,6 @@
         return null;
       };
       const contenders=s.slice(0,4).map(t=>({team:t,magic:selfMagic(t)}));
-      document.querySelector('#leaderBadge').textContent='잔여 맞대결 반영';
       const selfContenders=contenders.filter(({magic})=>magic!==null);
       document.querySelector('#titleNumbers').innerHTML=selfContenders.length
         ? selfContenders.map(({team:t,magic})=>`<div class="number-row"><div><b>${t.name}</b><div class="number-label">잔여 ${SEASON_GAMES-t.g}경기</div></div><div class="num blue">${magic}</div></div>`).join('')
