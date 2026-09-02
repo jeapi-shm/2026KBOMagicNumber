@@ -87,8 +87,8 @@
         const fixedLosses=fixedRemain-fixedWins;
         const winProbability=chaser.w/(chaser.w+chaser.l);
         const intro=`${fixed.name}${particle(fixed.name,'이','가')} <b>${fixedWins}승 ${fixedLosses}패</b>를 할 경우`;
-        const tieProbability=tieWins===null?0:binomialAtLeast(chaserRemain,tieWins,winProbability)-binomialAtLeast(chaserRemain,tieWins+1,winProbability);
-        const tieLine=tieWins===null?'':`${chaser.name}${particle(chaser.name,'이','가')} <b>${tieWins}승 ${chaserRemain-tieWins}패</b> 시 타이브레이크가 진행됩니다. (현재 ${chaser.name} 승률 기준 ${probabilityText(tieProbability)})`;
+        const tieOrBetterProbability=tieWins===null?0:binomialAtLeast(chaserRemain,tieWins,winProbability);
+        const tieLine=tieWins===null?'':`${chaser.name}${particle(chaser.name,'이','가')} <b>${tieWins}승 ${chaserRemain-tieWins}패</b> 시 타이브레이크가 진행됩니다. (현재 ${chaser.name} 승률 기준 타이브레이크 이상 달성 확률 ${probabilityText(tieOrBetterProbability)})`;
         const achievementProbability=needed===null?0:binomialAtLeast(chaserRemain,needed,winProbability);
         const overtakeLine=needed===null?`${chaser.name}${particle(chaser.name,'은','는')} 우위에 설 수 없습니다.`:`${chaser.name}${particle(chaser.name,'이','가')} <b>${needed}승 ${chaserRemain-needed}패</b> 시 우위에 설 수 있습니다. (현재 ${chaser.name} 승률 기준 달성 확률 ${probabilityText(achievementProbability)})`;
         document.querySelector('#scenarioAnswer').innerHTML=[intro,tieLine,overtakeLine].filter(Boolean).join('<br>');
