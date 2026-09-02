@@ -10,7 +10,7 @@ URL = "https://www.koreabaseball.com/Record/TeamRank/TeamRankDaily.aspx"
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 COLORS = {
-    "LG": "#ffd800", "한화": "#f37321", "SSG": "#ce0e2d",
+    "LG": "#ffe11f", "한화": "#f37321", "SSG": "#ce0e2d",
     "KT": "#111111", "삼성": "#074ca1", "롯데": "#041e42",
     "NC": "#315288", "KIA": "#ea0029", "두산": "#131230",
     "키움": "#570514",
