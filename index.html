@@ -22,7 +22,7 @@
     .scenario [data-record]{cursor:pointer}.scenario-answer{padding:10px 16px;border-bottom:1px solid var(--line);background:#f7faff;color:#344154;font-size:12px;line-height:1.7}.scenario-answer b{color:var(--blue)}.pace-up{color:var(--red)}.pace-down{color:var(--blue)}.pace-flat{color:var(--muted)}
     .scenario .win-horizontal{color:var(--horizontal-ink,#fff);background:var(--horizontal-color)!important}.scenario .win-vertical{color:var(--vertical-ink,var(--vertical-color))}
     .games{padding:6px 20px 14px}.game{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #eff1f4}.game:last-child{border:0}.time{font-size:12px;color:var(--muted)}.match{font-size:13px;font-weight:800}.place{font-size:11px;color:var(--muted)}
-    .notice{margin:16px 0 28px;color:var(--muted);font-size:12px;line-height:1.65}.notice strong{color:#56616e} footer{text-align:center;color:#9aa3ad;font-size:11px;padding:10px 0 26px}
+    .notice{margin:16px 0 28px;color:var(--muted);font-size:12px;line-height:1.65}.notice strong{color:#56616e} footer{text-align:center;color:#9aa3ad;font-size:11px;line-height:1.7;padding:10px 16px 26px}.footer-maker{margin-top:5px;color:#737e8a;font-weight:700}.footer-message{color:#87919c}
     @media(max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}.wrap{width:calc(100% - 20px)}.table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.table-scroll table{min-width:650px}.table-scroll .standings-table{min-width:0;width:100%;table-layout:fixed}.toolbar{margin-top:20px}h1{font-size:23px}.card-title{flex-wrap:wrap;gap:8px}.card-title .badge{max-width:100%;white-space:normal}.standings-table th,.standings-table td{padding:10px 1px;font-size:10.5px;white-space:nowrap}.standings-table th:nth-child(9),.standings-table td:nth-child(9),.standings-table th:nth-child(10),.standings-table td:nth-child(10){display:none}.standings-table th:nth-child(1),.standings-table td:nth-child(1){width:30px}.standings-table th:nth-child(2),.standings-table td:nth-child(2){width:54px}.standings-table th:nth-child(3),.standings-table td:nth-child(3),.standings-table th:nth-child(4),.standings-table td:nth-child(4),.standings-table th:nth-child(5),.standings-table td:nth-child(5),.standings-table th:nth-child(6),.standings-table td:nth-child(6),.standings-table th:nth-child(8),.standings-table td:nth-child(8){width:32px}.standings-table th:nth-child(7),.standings-table td:nth-child(7){width:42px}.standings-table .dot{width:6px;height:6px;margin-right:2px}.scenario-scroll{max-height:68vh}.scenario th,.scenario td{min-width:48px;width:48px;height:36px;font-size:9px}.scenario th:first-child,.scenario td:first-child{width:60px;min-width:60px}.scenario td strong{font-size:9px}.scenario td small{font-size:8px}.scenario-answer{padding:9px 12px}.formula{margin:0 12px 12px}}
   </style>
 </head>
@@ -42,7 +42,7 @@
       </aside>
     </div>
     <p class="notice"><strong>데이터 기준</strong> — 순위와 잔여 맞대결 수는 KBO 공식 홈페이지의 <span id="noticeDataDate"></span> 기록입니다. 매직넘버는 상대 팀의 최대 가능 승수와 잔여 맞대결에서 강제로 발생하는 패배까지 반영한 자력 확정 기준입니다. 동률은 확정으로 보지 않으며, 취소 경기 재편성이나 리그의 동률 결정 규정에 따라 실제 확정 시점은 달라질 수 있습니다.</p>
-  </main><footer>Unofficial KBO dashboard · 순위 출처: KBO 공식 홈페이지</footer>
+  </main><footer><div>Unofficial KBO dashboard · 순위 출처: KBO 공식 홈페이지</div><div class="footer-maker">만든이 CCC</div><div class="footer-message">AI가 가짜 매직넘버를 알려준 걸 이미지로 만들어서 올리고 있더라… 그런 거 하지 마라.<br>KT가 20승 10패를 하는데 무슨 시뮬레이션을 돌렸길래 우승 확률이 1%냐?</div></footer>
   <script>
     const SEASON_GAMES=144;
     // AUTO_DATA_START — scripts/update_kbo.py가 이 구간을 갱신합니다.
@@ -67,6 +67,8 @@
       if(teamName===horizontalTeamName||teamName===verticalTeamName)return;
       horizontalTeamName=verticalTeamName;verticalTeamName=teamName;updateSelectedRows();renderScenario();
     }
+    const hasBatchim=name=>{const code=name.charCodeAt(name.length-1);return code>=0xac00&&code<=0xd7a3&&(code-0xac00)%28!==0};
+    const particle=(name,withBatchim,withoutBatchim)=>hasBatchim(name)?withBatchim:withoutBatchim;
     function renderScenario(){
       const horizontal=teams.find(t=>t.name===horizontalTeamName),vertical=teams.find(t=>t.name===verticalTeamName);
       const horizontalRemain=SEASON_GAMES-horizontal.g,verticalRemain=SEASON_GAMES-vertical.g;
@@ -79,8 +81,6 @@
       const finalPct=(team,wins)=>(team.w+wins)/(team.w+team.l+SEASON_GAMES-team.g);
       const binomialAtLeast=(games,minWins,p)=>{let total=0,combination=1;for(let wins=0;wins<=games;wins++){if(wins>=minWins)total+=combination*p**wins*(1-p)**(games-wins);combination=combination*(games-wins)/(wins+1)}return total};
       const probabilityText=probability=>{const percent=probability*100;return percent>0&&percent<.1?'0.1% 미만':percent>99.9&&percent<100?'99.9% 초과':`${percent.toFixed(1)}%`};
-      const hasBatchim=name=>{const code=name.charCodeAt(name.length-1);return code>=0xac00&&code<=0xd7a3&&(code-0xac00)%28!==0};
-      const particle=(name,withBatchim,withoutBatchim)=>hasBatchim(name)?withBatchim:withoutBatchim;
       const showOvertake=(fixedAxis,fixedWins)=>{
         const fixed=fixedAxis==='horizontal'?horizontal:vertical,chaser=fixedAxis==='horizontal'?vertical:horizontal,fixedRemain=fixedAxis==='horizontal'?horizontalRemain:verticalRemain,chaserRemain=fixedAxis==='horizontal'?verticalRemain:horizontalRemain;
         let needed=null,tieWins=null;
@@ -127,7 +127,16 @@
       document.querySelector('#titleNumbers').innerHTML=selfContenders.length
         ? selfContenders.map(({team:t,magic})=>`<div class="number-row"><div><b>${t.name}</b><div class="number-label">잔여 ${SEASON_GAMES-t.g}경기</div></div><div class="num blue">${magic}</div></div>`).join('')
         : `<div class="number-row"><div><b>자력 우승 가능 팀 없음</b><div class="number-label">경쟁 팀의 경기 결과가 필요합니다</div></div><div class="num">—</div></div>`;
-      document.querySelector('#titleFormula').innerHTML=`<b>맞대결 제약을 포함한 자력 매직넘버</b><br>KT가 28승하면 삼성전 4경기 중 최소 2승이 포함됩니다. 따라서 KT는 96승, 삼성은 최대 95승이 되어 KT의 자력 매직넘버는 28입니다. 삼성도 같은 방식으로 계산합니다.`;
+      const example=selfContenders.find(({team})=>team.name==='삼성')||selfContenders[0];
+      if(example){
+        const t=example.team,wins=example.magic,remain=SEASON_GAMES-t.g;
+        const rivals=s.filter(o=>o!==t).map(o=>{const games=matchup(t.name,o.name),forcedLosses=Math.max(0,wins-(remain-games));return {team:o,games,forcedLosses,maxWins:(SEASON_GAMES-o.g)-forcedLosses,finalWins:o.w+(SEASON_GAMES-o.g)-forcedLosses}}).sort((a,b)=>b.finalWins-a.finalWins);
+        const rival=rivals[0],losses=remain-wins;
+        const matchupLosses=rival.games-rival.forcedLosses;
+        document.querySelector('#titleFormula').innerHTML=`<b>맞대결 제약을 포함한 자력 매직넘버</b><br>현재 ${t.name}의 잔여경기는 ${remain}경기, ${rival.team.name}의 잔여경기는 ${SEASON_GAMES-rival.team.g}경기이며 두 팀은 <b>${rival.games}번의 맞대결</b>이 남았습니다.<br><br>${t.name}${particle(t.name,'이','가')} <b>${wins}승 ${losses}패</b>를 하면 ${rival.games}번의 맞대결에서 최악의 경우에도 <b>${rival.forcedLosses}승 ${matchupLosses}패</b>를 거두게 됩니다. 그에 따라 ${rival.team.name}에는 <b>${matchupLosses}승 ${rival.forcedLosses}패</b>의 전적이 생기므로, ${t.name}${particle(t.name,'이','가')} ${wins}승을 하는 경우 ${rival.team.name}${particle(rival.team.name,'은','는')} 남은 경기에서 최대 <b>${rival.maxWins}승 ${rival.forcedLosses}패</b>만 할 수 있습니다.<br><br>${t.name}${particle(t.name,'이','가')} ${wins}승 ${losses}패를 하게 되면 ${rival.team.name}${particle(rival.team.name,'이','가')} 나머지 경기를 전승한다고 가정하더라도, 최종 승수는 ${t.name} <b>${t.w+wins}승</b>, ${rival.team.name} <b>${rival.finalWins}승</b>입니다. ${t.name}${particle(t.name,'은','는')} 다른 팀의 결과와 관계없이 ${wins}승으로 KS 직행을 확정할 수 있습니다.<br><br>따라서, 자력 매직넘버는 <b>${wins}</b>입니다.`;
+      }else{
+        document.querySelector('#titleFormula').innerHTML=`<b>맞대결 제약을 포함한 자력 매직넘버</b><br>현재는 다른 팀의 경기 결과 없이 자력으로 우승을 확정할 수 있는 팀이 없습니다.`;
+      }
       const bottomFive=s.slice(5);
       const postMagic=t=>{
         const remain=SEASON_GAMES-t.g;
