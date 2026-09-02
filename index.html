@@ -109,9 +109,9 @@
       document.querySelector('#leaderBadge').textContent='잔여 맞대결 반영';
       const selfContenders=contenders.filter(({magic})=>magic!==null);
       document.querySelector('#titleNumbers').innerHTML=selfContenders.length
-        ? selfContenders.map(({team:t,magic})=>`<div class="number-row"><div><b>${t.name} 자력 우승</b><div class="number-label">잔여 ${SEASON_GAMES-t.g}경기</div></div><div class="num blue">M${magic}</div></div>`).join('')
+        ? selfContenders.map(({team:t,magic})=>`<div class="number-row"><div><b>${t.name}</b><div class="number-label">잔여 ${SEASON_GAMES-t.g}경기</div></div><div class="num blue">${magic}</div></div>`).join('')
         : `<div class="number-row"><div><b>자력 우승 가능 팀 없음</b><div class="number-label">경쟁 팀의 경기 결과가 필요합니다</div></div><div class="num">—</div></div>`;
-      document.querySelector('#titleFormula').innerHTML=`<b>맞대결 제약을 포함한 자력 매직넘버</b><br>KT가 28승하면 삼성전 4경기 중 최소 2승이 포함됩니다. 따라서 KT는 96승, 삼성은 최대 95승이 되어 KT의 자력 매직넘버는 M28입니다. 삼성도 같은 방식으로 계산합니다.`;
+      document.querySelector('#titleFormula').innerHTML=`<b>맞대결 제약을 포함한 자력 매직넘버</b><br>KT가 28승하면 삼성전 4경기 중 최소 2승이 포함됩니다. 따라서 KT는 96승, 삼성은 최대 95승이 되어 KT의 자력 매직넘버는 28입니다. 삼성도 같은 방식으로 계산합니다.`;
       const bottomFive=s.slice(5);
       const postMagic=t=>{
         const remain=SEASON_GAMES-t.g;
@@ -121,7 +121,7 @@
         }
         return null;
       };
-      document.querySelector('#postNumbers').innerHTML=s.slice(0,5).map(t=>{const magic=postMagic(t);return `<div class="number-row"><div><b>${t.name}</b><div class="number-label">6~10위 최대 승수 기준</div></div><div class="num ${magic===null?'need red':'green'}">${magic===null?'타팀 결과 필요':`M${magic}`}</div></div>`}).join('');
+      document.querySelector('#postNumbers').innerHTML=s.slice(0,5).map(t=>{const magic=postMagic(t);return `<div class="number-row"><div><b>${t.name}</b><div class="number-label">잔여 ${SEASON_GAMES-t.g}경기</div></div><div class="num ${magic===null?'need red':'green'}">${magic===null?'타팀 결과 필요':magic}</div></div>`}).join('');
       document.querySelector('#games').innerHTML=todayGames.map(g=>`<div class="game"><span class="time">${g.time}</span><span class="match">${g.away} <span style="color:#a1a9b3">vs</span> ${g.home}</span><span class="place">${g.place}</span></div>`).join('');
       renderScenario();
       document.querySelector('#updated').textContent=DATA_DATE;document.querySelector('#gameDate').textContent='9.03';
