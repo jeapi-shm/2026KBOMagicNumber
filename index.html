@@ -78,13 +78,17 @@
       const finalPct=(team,wins)=>(team.w+wins)/(team.w+team.l+SEASON_GAMES-team.g);
       const binomialAtLeast=(games,minWins,p)=>{let total=0,combination=1;for(let wins=0;wins<=games;wins++){if(wins>=minWins)total+=combination*p**wins*(1-p)**(games-wins);combination=combination*(games-wins)/(wins+1)}return total};
       const probabilityText=probability=>{const percent=probability*100;return percent>0&&percent<.1?'0.1% 미만':percent>99.9&&percent<100?'99.9% 초과':`${percent.toFixed(1)}%`};
+      const hasBatchim=name=>{const code=name.charCodeAt(name.length-1);return code>=0xac00&&code<=0xd7a3&&(code-0xac00)%28!==0};
+      const particle=(name,withBatchim,withoutBatchim)=>hasBatchim(name)?withBatchim:withoutBatchim;
       const showOvertake=(fixedAxis,fixedWins)=>{
         const fixed=fixedAxis==='horizontal'?horizontal:vertical,chaser=fixedAxis==='horizontal'?vertical:horizontal,fixedRemain=fixedAxis==='horizontal'?horizontalRemain:verticalRemain,chaserRemain=fixedAxis==='horizontal'?verticalRemain:horizontalRemain;
-        let needed=null;
-        for(let wins=0;wins<=chaserRemain;wins++){const feasible=fixedAxis==='horizontal'?possible(fixedWins,wins):possible(wins,fixedWins);if(feasible&&finalPct(chaser,wins)>finalPct(fixed,fixedWins)){needed=wins;break}}
+        let needed=null,tieWins=null;
+        for(let wins=0;wins<=chaserRemain;wins++){const feasible=fixedAxis==='horizontal'?possible(fixedWins,wins):possible(wins,fixedWins);if(!feasible)continue;const difference=finalPct(chaser,wins)-finalPct(fixed,fixedWins);if(Math.abs(difference)<1e-12)tieWins=wins;if(needed===null&&difference>0)needed=wins}
         const fixedLosses=fixedRemain-fixedWins;
         const achievementProbability=needed===null?0:binomialAtLeast(chaserRemain,needed,chaser.w/(chaser.w+chaser.l));
-        document.querySelector('#scenarioAnswer').innerHTML=needed===null?`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}은 우위에 설 수 없습니다.`:`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}이 우위에 서려면 최소 <b>${needed}승 ${chaserRemain-needed}패</b>가 필요합니다. (현재 승률 기준 달성 확률 ${probabilityText(achievementProbability)})`;
+        const tieText=tieWins===null?'':`<b>${tieWins}승 ${chaserRemain-tieWins}패</b> 시 타브, `;
+        const noOvertakeText=tieWins===null?`우위에 설 수 없습니다.`:`<b>${tieWins}승 ${chaserRemain-tieWins}패</b> 시 타브가 가능하지만 우위에 설 수 없습니다.`;
+        document.querySelector('#scenarioAnswer').innerHTML=needed===null?`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}${particle(chaser.name,'은','는')} ${noOvertakeText}`:`<b>${fixed.name} ${fixedWins}승 ${fixedLosses}패</b> 시 ${chaser.name}${particle(chaser.name,'은','는')} ${tieText}우위에 서려면 최소 <b>${needed}승 ${chaserRemain-needed}패</b>가 필요합니다. (현재 ${chaser.name} 승률 기준 달성 확률 ${probabilityText(achievementProbability)})`;
       };
       document.querySelector('#scenarioTitle').textContent=`${horizontal.name}–${vertical.name} 경우의 수`;
       const horizontalPacePct=horizontalRemain?(horizontalPaceWins/horizontalRemain).toFixed(3):'0.000';
