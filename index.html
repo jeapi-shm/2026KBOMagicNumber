@@ -117,7 +117,25 @@
       const selfMagic=t=>{
         const remain=SEASON_GAMES-t.g;
         for(let wins=0;wins<=remain;wins++){
-          const guaranteed=s.every(o=>{if(o===t)return true;const forcedLosses=Math.max(0,wins-(remain-matchup(t.name,o.name)));const opponentMax=o.w+(SEASON_GAMES-o.g)-forcedLosses;return t.w+wins>opponentMax});
+          const guaranteed=s.every(o=>{
+            if(o===t)return true;
+            const h2h=matchup(t.name,o.name);
+            const oRemain=SEASON_GAMES-o.g;
+            const tOther=remain-h2h;
+            const oOther=oRemain-h2h;
+            const canOvertake=Array.from({length:oRemain+1},(_,i)=>i).some(oWins=>{
+              const minTH2h=Math.max(0,wins-tOther);
+              const maxTH2h=Math.min(h2h,wins);
+              const minOH2h=Math.max(0,oWins-oOther);
+              const maxOH2h=Math.min(h2h,oWins);
+              const feasible=!(maxTH2h<minTH2h||maxOH2h<minOH2h||minTH2h+minOH2h>h2h||maxTH2h+maxOH2h<h2h);
+              if(!feasible)return false;
+              const tPct=(t.w+wins)/(t.w+t.l+remain);
+              const oPct=(o.w+oWins)/(o.w+o.l+oRemain);
+              return oPct>=tPct;
+            });
+            return!canOvertake;
+          });
           if(guaranteed)return wins;
         }
         return null;
@@ -141,7 +159,24 @@
       const postMagic=t=>{
         const remain=SEASON_GAMES-t.g;
         for(let wins=0;wins<=remain;wins++){
-          const clinched=bottomFive.every(o=>{const forcedLosses=Math.max(0,wins-(remain-matchup(t.name,o.name)));const opponentMax=o.w+(SEASON_GAMES-o.g)-forcedLosses;return t.w+wins>opponentMax});
+          const clinched=bottomFive.every(o=>{
+            const h2h=matchup(t.name,o.name);
+            const oRemain=SEASON_GAMES-o.g;
+            const tOther=remain-h2h;
+            const oOther=oRemain-h2h;
+            const canOvertake=Array.from({length:oRemain+1},(_,i)=>i).some(oWins=>{
+              const minTH2h=Math.max(0,wins-tOther);
+              const maxTH2h=Math.min(h2h,wins);
+              const minOH2h=Math.max(0,oWins-oOther);
+              const maxOH2h=Math.min(h2h,oWins);
+              const feasible=!(maxTH2h<minTH2h||maxOH2h<minOH2h||minTH2h+minOH2h>h2h||maxTH2h+maxOH2h<h2h);
+              if(!feasible)return false;
+              const tPct=(t.w+wins)/(t.w+t.l+remain);
+              const oPct=(o.w+oWins)/(o.w+o.l+oRemain);
+              return oPct>=tPct;
+            });
+            return!canOvertake;
+          });
           if(clinched)return wins;
         }
         return null;
