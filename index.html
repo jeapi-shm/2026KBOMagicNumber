@@ -117,7 +117,7 @@
       const selfMagic=t=>{
         const remain=SEASON_GAMES-t.g;
         for(let wins=0;wins<=remain;wins++){
-          const guaranteed=s.every(o=>{if(o===t)return true;const forcedLosses=Math.max(0,wins-(remain-matchup(t.name,o.name)));const opponentMax=o.w+(SEASON_GAMES-o.g)-forcedLosses;return t.w+wins>opponentMax});
+          const guaranteed=s.every(o=>{if(o===t)return true;const h2h=matchup(t.name,o.name),otherGames=remain-h2h,minH2hWins=Math.max(0,wins-otherGames),maxH2hLosses=h2h-minH2hWins,opponentMax=o.w+(SEASON_GAMES-o.g)-maxH2hLosses,tPct=(t.w+wins)/(t.w+t.l+wins),oPct=opponentMax/(o.w+o.l+SEASON_GAMES-o.g);return tPct>oPct});
           if(guaranteed)return wins;
         }
         return null;
@@ -141,7 +141,16 @@
       const postMagic=t=>{
         const remain=SEASON_GAMES-t.g;
         for(let wins=0;wins<=remain;wins++){
-          const clinched=bottomFive.every(o=>{const forcedLosses=Math.max(0,wins-(remain-matchup(t.name,o.name)));const opponentMax=o.w+(SEASON_GAMES-o.g)-forcedLosses;return t.w+wins>opponentMax});
+          const clinched=bottomFive.every(o=>{
+            const h2h=matchup(t.name,o.name);
+            const otherGames=remain-h2h;
+            const minH2hWins=Math.max(0,wins-otherGames);
+            const maxH2hLosses=h2h-minH2hWins;
+            const opponentMax=o.w+(SEASON_GAMES-o.g)-maxH2hLosses;
+            const tPct=(t.w+wins)/(t.w+t.l+wins);
+            const oPct=opponentMax/(o.w+o.l+SEASON_GAMES-o.g);
+            return tPct>oPct;
+          });
           if(clinched)return wins;
         }
         return null;
