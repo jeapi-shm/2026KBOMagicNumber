@@ -1,9 +1,11 @@
 import json
 import re
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
+from kbo_schedule import fetch_games
 
 
 URL = "https://www.koreabaseball.com/Record/TeamRank/TeamRankDaily.aspx"
@@ -87,6 +89,10 @@ for i, home in enumerate(team_names):
         remaining.setdefault(home, {})[away] = games_left
 
 team_js = json.dumps(teams, ensure_ascii=False, separators=(",", ":"))
+today = datetime.now(timezone(timedelta(hours=9))).date()
+with requests.Session() as session:
+    session.headers.update({"User-Agent": "Mozilla/5.0 KBO-dashboard/1.0"})
+    today_games = fetch_games(session, today)
 remaining_js = json.dumps(remaining, ensure_ascii=False, separators=(",", ":"))
 generated = (
     "// AUTO_DATA_START — scripts/update_kbo.py가 이 구간을 갱신합니다.\n"
@@ -95,6 +101,8 @@ generated = (
     f"    const teams={team_js};\n"
     "    // KBO 팀간 승패표로 계산한 잔여 맞대결 수\n"
     f"    const remainingMatchups={remaining_js};\n"
+    f"    const GAME_DATE={json.dumps(f'{today.month}.{today.day:02d}')};\n"
+    f"    const todayGames={json.dumps(today_games, ensure_ascii=False)};\n"
     "    // AUTO_DATA_END"
 )
 
