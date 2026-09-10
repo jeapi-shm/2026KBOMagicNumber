@@ -51,8 +51,8 @@
     const teams=[{"name":"KT","g":121,"w":72,"l":46,"d":3,"streak":"3승","color":"#111111"},{"name":"삼성","g":123,"w":73,"l":47,"d":3,"streak":"1패","color":"#074ca1"},{"name":"LG","g":124,"w":68,"l":55,"d":1,"streak":"4패","color":"#ffe11f"},{"name":"KIA","g":123,"w":66,"l":55,"d":2,"streak":"3패","color":"#ea0029"},{"name":"두산","g":126,"w":63,"l":59,"d":4,"streak":"1승","color":"#131230"},{"name":"NC","g":119,"w":57,"l":60,"d":2,"streak":"2승","color":"#315288"},{"name":"한화","g":123,"w":54,"l":66,"d":3,"streak":"1패","color":"#f37321"},{"name":"SSG","g":127,"w":54,"l":68,"d":5,"streak":"2승","color":"#ce0e2d"},{"name":"롯데","g":121,"w":52,"l":67,"d":2,"streak":"1패","color":"#041e42"},{"name":"키움","g":129,"w":45,"l":81,"d":3,"streak":"1패","color":"#570514"}];
     // KBO 팀간 승패표로 계산한 잔여 맞대결 수
     const remainingMatchups={"KT":{"삼성":3,"LG":1,"KIA":4,"두산":3,"NC":2,"한화":2,"SSG":1,"롯데":5,"키움":2},"삼성":{"LG":2,"KIA":1,"두산":4,"NC":1,"한화":4,"SSG":2,"롯데":3,"키움":1},"LG":{"KIA":5,"두산":1,"NC":3,"한화":2,"SSG":3,"롯데":3,"키움":0},"KIA":{"두산":1,"NC":3,"한화":1,"SSG":3,"롯데":2,"키움":1},"두산":{"NC":5,"한화":0,"SSG":0,"롯데":2,"키움":2},"NC":{"한화":4,"SSG":5,"롯데":1,"키움":1},"한화":{"SSG":1,"롯데":3,"키움":4},"SSG":{"롯데":1,"키움":1},"롯데":{"키움":3}};
-    const GAME_DATE="9.10";
-    const todayGames=[{"time": "18:30", "away": "키움", "home": "두산", "place": "잠실", "status": ""}, {"time": "18:30", "away": "KT", "home": "롯데", "place": "사직", "status": ""}, {"time": "18:30", "away": "한화", "home": "SSG", "place": "문학", "status": ""}, {"time": "18:30", "away": "NC", "home": "KIA", "place": "광주", "status": ""}];
+    const GAME_DATE="9.11";
+    const todayGames=[{"time": "18:30", "away": "키움", "home": "삼성", "place": "대구", "status": ""}, {"time": "18:30", "away": "KT", "home": "롯데", "place": "사직", "status": ""}, {"time": "18:30", "away": "SSG", "home": "KIA", "place": "광주", "status": ""}, {"time": "18:30", "away": "NC", "home": "한화", "place": "대전", "status": ""}];
     // AUTO_DATA_END
     function sorted(){return [...teams].sort((a,b)=>(b.w/(b.w+b.l))-(a.w/(a.w+a.l))||b.w-a.w)}
     function matchup(a,b){return remainingMatchups[a]?.[b]??remainingMatchups[b]?.[a]??0}
